@@ -5,8 +5,7 @@
 
 interface::interface() {
     initscr();
-    noecho();
-    //this->_render = new Render;
+    this->_render = new render;
     keypad(stdscr, true);
     cbreak();
     curs_set(0);
