@@ -6,7 +6,12 @@ color::color() : _color_current(COLOR::DEFAULT) {
         start_color();
     }
     use_default_colors();
+    init_pair(static_cast<int>(COLOR::GREEN), COLOR_GREEN, -1);
+    init_pair(static_cast<int>(COLOR::RED), COLOR_RED, -1);
 
+
+    init_pair(static_cast<int>(COLOR::BACKGROUND_GREEN), -1, COLOR_GREEN);
+    return ;
 }
 
 color::COLOR color::get_color() const {

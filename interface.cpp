@@ -1,10 +1,12 @@
 #include "interface.hpp"
 #include <ncurses.h>
 #include <chrono>
+#include <cstdlib>
 #include <unistd.h>
 
 interface::interface() {
     initscr();
+    noecho(); 
     this->_render = new render;
     keypad(stdscr, true);
     cbreak();
@@ -23,13 +25,13 @@ int interface::exec() {
 }
 
 int interface::_game() {
-    snake game(10, 20);
+      snake game(10, 20);
  //   timeout(300);
     while ( game.game_statistics() == snake::type_game::none ) {
         wclear(stdscr);
-        move(0, 0);
+        this->_render->_table(1, 1, 10, 20);
         for (short i = 0; i < 10; i++) {
-            printw("|");
+            move(1 + i, 1);
             for (short j = 0; j < 20; j++) {
                 switch ( game.is_cell(i, j) ) {
                     case snake::type_field::none:
@@ -39,11 +41,13 @@ int interface::_game() {
                         printw("$");
                         break;
                     case snake::type_field::snake:
-                        printw("#");
+                        this->_render->_color.set_color(color::COLOR::BACKGROUND_GREEN);
+                        printw(" ");
+                        this->_render->_color.set_color(color::COLOR::DEFAULT);
+
                         break;
                 }
             }
-            printw("|\n");
         }
         auto start = std::chrono::high_resolution_clock::now();
         halfdelay(3);

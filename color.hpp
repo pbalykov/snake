@@ -8,6 +8,8 @@ public:
         DEFAULT = 0,
         GREEN = 1,
         RED = 2,
+
+        BACKGROUND_GREEN = 3,
     };
     color();
     COLOR get_color() const;

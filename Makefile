@@ -18,6 +18,10 @@ main: $(patsubst %.cpp,$(OBJ)%.o,$(wildcard *.cpp))
 $(OBJ)interface.o: interface.cpp
 	c++ -c $^ -o $@  $(NCURSES_HEADER) -O3 -std=c++17
 
+$(OBJ)color.o: color.cpp
+	c++ -c $^ -o $@  $(NCURSES_HEADER) -O3 -std=c++17
+
+
 
 $(OBJ)%.o: %.cpp
 	c++ -c $^ -o $@ -O3 -std=c++17
