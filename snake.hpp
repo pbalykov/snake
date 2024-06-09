@@ -2,7 +2,6 @@
 #define SNAKE_HPP
 
 #include <vector>
-#include <deque>
 
 namespace {
     using ushort = unsigned short;
@@ -26,7 +25,7 @@ public:
     void set_step(enum type_step new_step);
     enum type_game game_statistics() const;
     ushort score_apple() const;
-    const std::deque<std::pair<ushort, ushort> >& arr_snake() const;
+    const std::vector<std::pair<ushort, ushort> >& arr_snake() const;
     ushort get_width() const;
     ushort get_height() const;
 
@@ -47,7 +46,7 @@ private:
     enum type_step _direction;
     bool _end_game;
 
-    std::deque<std::pair<ushort, ushort> > _snake;
+    std::vector<std::pair<ushort, ushort> > _snake;
     std::vector<std::vector<type_field> > _field;
     std::pair<ushort, ushort> _apple;
 };

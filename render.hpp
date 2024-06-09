@@ -2,6 +2,8 @@
 #define RENDER_HPP
 
 #include "color.hpp"
+#include "snake.hpp"
+
 #include <utility>
 
 class render {
@@ -10,6 +12,7 @@ public:
     ~render() = default;
 
     bool main_menu();
+    bool game(const snake& game);
 
 //private:
     void _repeat(int symbol, int quantity) const;

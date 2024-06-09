@@ -29,26 +29,7 @@ int interface::_game() {
  //   timeout(300);
     while ( game.game_statistics() == snake::type_game::none ) {
         wclear(stdscr);
-        this->_render->_table(1, 1, 10, 20);
-        for (short i = 0; i < 10; i++) {
-            move(1 + i, 1);
-            for (short j = 0; j < 20; j++) {
-                switch ( game.is_cell(i, j) ) {
-                    case snake::type_field::none:
-                        printw(" ");
-                        break;
-                    case snake::type_field::apple:
-                        printw("$");
-                        break;
-                    case snake::type_field::snake:
-                        this->_render->_color.set_color(color::COLOR::BACKGROUND_GREEN);
-                        printw(" ");
-                        this->_render->_color.set_color(color::COLOR::DEFAULT);
-
-                        break;
-                }
-            }
-        }
+        this->_render->game(game);
         auto start = std::chrono::high_resolution_clock::now();
         halfdelay(3);
         auto key = getch();

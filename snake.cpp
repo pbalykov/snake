@@ -72,7 +72,7 @@ bool snake::step() {
     switch ( this->_field[index.first][index.second] ) {
         case type_field::none:
             this->_snake.push_back(index);
-            this->_snake.pop_front();
+            this->_snake.erase(this->_snake.begin());
             this->_field[index.first][index.second] = type_field::snake;
             break;
         case type_field::snake:
@@ -111,7 +111,7 @@ ushort snake::score_apple() const {
     return this->_score_apple;
 }
 
-const std::deque<std::pair<ushort, ushort> >& snake::arr_snake() const {
+const std::vector<std::pair<ushort, ushort> >& snake::arr_snake() const {
     return this->_snake;
 }
 
