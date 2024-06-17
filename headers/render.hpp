@@ -20,6 +20,8 @@ public:
 private:
     static constexpr std::string_view STR_APPLE = "Apple";
     static constexpr std::string_view STR_MAX_APPLE = "Max apple";
+    static constexpr int SIZE_TABLE_SCORE = 2;
+    static constexpr int FRAME_SIZE = 2;
 
     void _repeat(int symbol, int quantity) const;
     void _table(int y, int x, int height, int width) const;    

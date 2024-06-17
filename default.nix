@@ -14,4 +14,3 @@ stdenv.mkDerivation {
     cp bin/snake $out/bin/
   '';
 }
-

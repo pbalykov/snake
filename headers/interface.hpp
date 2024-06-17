@@ -12,6 +12,8 @@ public:
     ~interface();
     int exec();
 private:
+    static constexpr std::string_view PAUSE[] = {" Pause ",
+    "launch", "exit"};
     int _game();
     render* _render;
 };

@@ -8,6 +8,7 @@ public:
         DEFAULT = 0,
         GREEN = 1,
         RED = 2,
+        YELLOW = 5, 
 
         BACKGROUND_GREEN = 3,
         BACKGROUND_RED = 4,

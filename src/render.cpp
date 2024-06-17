@@ -46,32 +46,33 @@ bool render::main_menu() {
 
 bool render::game(const snake& game) {
     auto size_term = this->_terminal_size();
-    auto width = game.get_width();
+    auto width = game.get_width(); 
+    width += SIZE_TABLE_SCORE;
     auto height = game.get_height();
-    if ( size_term.first < (width + 6) || size_term.second < (height + 6) )  {
-        return false;
-    }
-    
+  
     int y = size_term.first / 2 - width / 2;
     int x = size_term.second / 2 - height / 2;
     int str_max_app = STR_MAX_APPLE.size();
     int str_app = STR_APPLE.size();
     int max_table = str_max_app > str_app ? str_max_app : str_app;
 
-    this->_table(y - 4, x - 2, 2, max_table);
-    move(y - 4, x - 2 + max_table / 2 - str_max_app / 2);
+    this->_table(y, x - 2, SIZE_TABLE_SCORE, max_table);
+    this->_color.set_color(color::COLOR::YELLOW);
+    move(y, x - 2 + max_table / 2 - str_max_app / 2);
     printw("%s", STR_MAX_APPLE);
- 
-    this->_table(y - 4, x + height - 9, 2, max_table);
-    move(y - 4, x + height - 9 + max_table / 2 - str_app / 2);
+    this->_color.set_color(color::COLOR::DEFAULT);   
+
+    this->_table(y, x + height - 9, SIZE_TABLE_SCORE, max_table);
+    move(y, x + height - 9 + max_table / 2 - str_app / 2);
+    this->_color.set_color(color::COLOR::YELLOW);
     printw("%s", STR_APPLE);
-
     ushort score = game.score_apple();
-    move(y - 3, x + height - 9 + max_table / 2 - number_signs(score) / 2);
+    move(y + 1, x + height - 9 + max_table / 2 - number_signs(score) / 2);
     printw("%d", score);
-
-
-    this->_table(y, x, width, height);
+    this->_color.set_color(color::COLOR::DEFAULT);
+    
+    y += SIZE_TABLE_SCORE + FRAME_SIZE;
+    this->_table(y, x, game.get_width(), game.get_height());
     auto snake_arr = game.arr_snake();
     this->_color.set_color(color::COLOR::BACKGROUND_GREEN);
     for (int i = 0; i < snake_arr.size(); i++) {
