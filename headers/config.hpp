@@ -12,6 +12,8 @@ public:
 private:
     std::string _name_file;
     unsigned short _value;
+    std::string _folder;
+    static constexpr const char* FOLDER = "/.cache/snake";
 };
 
 #endif

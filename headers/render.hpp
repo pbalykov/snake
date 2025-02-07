@@ -14,7 +14,7 @@ public:
     ~render() = default;
 
     bool main_menu();
-    bool game(const snake& game);
+    bool game(const snake& game, unsigned short max_score);
 
 
 private:

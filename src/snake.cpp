@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iterator>
 
+
 bool snake::_generation_apple() {
     this->_apple = std::make_pair(this->_width, this->_height);
     if ( this->_score_apple == this->_width * this->_height ) {

@@ -44,7 +44,7 @@ bool render::main_menu() {
     return true;
 }
 
-bool render::game(const snake& game) {
+bool render::game(const snake& game, unsigned short max_score) {
     auto size_term = this->_terminal_size();
     auto width = game.get_width(); 
     width += SIZE_TABLE_SCORE;
@@ -56,11 +56,14 @@ bool render::game(const snake& game) {
     int str_app = STR_APPLE.size();
     int max_table = str_max_app > str_app ? str_max_app : str_app;
 
-    this->_table(y, x - 2, SIZE_TABLE_SCORE, max_table);
+    this->_table(y, x, SIZE_TABLE_SCORE, max_table);
     this->_color.set_color(color::COLOR::YELLOW);
-    move(y, x - 2 + max_table / 2 - str_max_app / 2);
+    move(y, x + max_table / 2 - str_max_app / 2);
     printw("%s", STR_MAX_APPLE);
-    this->_color.set_color(color::COLOR::DEFAULT);   
+    move(y + 1, x + max_table / 2 - number_signs(max_score) / 2);
+    printw("%d", max_score);
+    this->_color.set_color(color::COLOR::DEFAULT);
+
 
     this->_table(y, x + height - 9, SIZE_TABLE_SCORE, max_table);
     move(y, x + height - 9 + max_table / 2 - str_app / 2);
