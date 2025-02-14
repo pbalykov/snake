@@ -15,6 +15,9 @@ public:
 
     bool main_menu();
     bool game(const snake& game, unsigned short max_score);
+    bool meny_YES_NO(const std::string_view NAME, int currsor);
+
+    bool draw_seconds(short second);
 
 
 private:

@@ -2,6 +2,7 @@
 #include <ncurses.h>
 #include <chrono>
 #include <cstdlib>
+#include <thread>
 #include <unistd.h>
 #include <algorithm>
 
@@ -25,38 +26,76 @@ int interface::exec() {
     return this->_game();
 }
 
-int interface::_game() {
-    snake game(WIDTH, HEIGHT);
-    while ( game.game_statistics() == snake::type_game::none ) {
+bool interface::_play_again(const snake& game) {
+    int cursor = 0;
+    bool end_play_again = true;
+    for ( ;end_play_again; ) {
         wclear(stdscr);
         this->_render->game(game, this->_record.get_value());
-        auto start = std::chrono::high_resolution_clock::now();
-        halfdelay(3);
+        this->_render->meny_YES_NO(interface::PLAY_AGAIN, cursor);
         auto key = getch();
-        switch (key) {
-            case KEY_UP :
-                game.set_step(snake::type_step::up);
+        switch ( key ) {
+            case KEY_LEFT :
+                cursor = ( (cursor - 1) % 2 + 2) % 2;
                 break;
-    	    case KEY_DOWN :
-                game.set_step(snake::type_step::down);
-    	        break;
-    	    case KEY_LEFT :
-                game.set_step(snake::type_step::left);
-        		break;
     	    case KEY_RIGHT :
-	            game.set_step(snake::type_step::rauth);
-    	        break;
-            case 'q' :
-                return 0;
+                cursor = ( (cursor + 1) % 2 + 2) % 2;
+	            break;
+            case '\n':
+                end_play_again = false;
+                break;
         }
-        auto end = std::chrono::high_resolution_clock::now();
-        double elapsed = (std::chrono::duration_cast<std::chrono::milliseconds>(end - start)).count();
-        if ( elapsed < 300 ) 
-            usleep((300 - elapsed) * 1000);
-        game.step();
-        int max_record = std::max(game.score_apple(), this->_record.get_value());
-        this->_record.set_value(max_record); 
-        flushinp();
     }
+    return cursor;
+}
+
+bool interface::_countdown(const snake& game) {
+    for (short i = SECONDS; i >= 0; i--) {
+        wclear(stdscr);
+        this->_render->game(game, this->_record.get_value());
+        this->_render->draw_seconds(i);
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+    return true;
+}
+
+
+int interface::_game() {
+    snake game(WIDTH, HEIGHT);
+    do {
+        game = snake(WIDTH, HEIGHT);
+        this->_countdown(game);
+        while ( game.game_statistics() == snake::type_game::none ) {
+            wclear(stdscr);
+            this->_render->game(game, this->_record.get_value());
+            auto start = std::chrono::high_resolution_clock::now();
+            halfdelay(3);
+            auto key = getch();
+            switch (key) {
+                case KEY_UP :
+                    game.set_step(snake::type_step::up);
+                    break;
+                case KEY_DOWN :
+                    game.set_step(snake::type_step::down);
+                    break;
+                case KEY_LEFT :
+                    game.set_step(snake::type_step::left);
+                    break;
+                case KEY_RIGHT :
+                    game.set_step(snake::type_step::rauth);
+                    break;
+                case 'q' :
+                    return 0;
+            }
+            auto end = std::chrono::high_resolution_clock::now();
+            double elapsed = (std::chrono::duration_cast<std::chrono::milliseconds>(end - start)).count();
+            if ( elapsed < 300 ) 
+                usleep((300 - elapsed) * 1000);
+            game.step();
+            int max_record = std::max(game.score_apple(), this->_record.get_value());
+            this->_record.set_value(max_record); 
+            flushinp();
+        }
+    } while ( !this->_play_again(game) );
     return 0;
 }

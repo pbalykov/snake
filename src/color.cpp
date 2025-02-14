@@ -9,13 +9,14 @@ color::color() : _color_current(COLOR::DEFAULT) {
     init_pair(static_cast<int>(COLOR::GREEN), COLOR_GREEN, -1);
     init_pair(static_cast<int>(COLOR::RED), COLOR_RED, -1);
     init_pair(static_cast<int>(COLOR::YELLOW), COLOR_YELLOW, -1);
+    init_pair(static_cast<int>(COLOR::GREY), COLOR_BLACK, COLOR_WHITE);
 
     init_pair(static_cast<int>(COLOR::BACKGROUND_GREEN), COLOR_BLACK, COLOR_GREEN);
     init_pair(static_cast<int>(COLOR::BACKGROUND_RED),  -1, COLOR_RED);
     return ;
 }
 
-color::COLOR color::get_color() const {
+COLOR color::get_color() const {
     return this->_color_current;
 }
 

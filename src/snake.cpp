@@ -52,7 +52,7 @@ std::pair<ushort, ushort> snake::_new_index() const {
 
 
 snake::snake(ushort width, ushort height) 
-    : _width(width), _height(height), _score_apple(0), 
+    : _score_apple(0), _width(width), _height(height),
     _direction(type_step::rauth), _end_game(false), _snake(), 
     _field(width, std::vector<type_field>(height, type_field::none) )
 {   

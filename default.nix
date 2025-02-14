@@ -11,6 +11,6 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/bin
-    cp bin/snake $out/bin/
+    cp Snake $out/bin/
   '';
 }
