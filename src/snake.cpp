@@ -57,7 +57,9 @@ snake::snake(ushort width, ushort height)
     _field(width, std::vector<type_field>(height, type_field::none) )
 {   
     this->_snake.push_back(std::make_pair(width / 2, 0));
+    this->_snake.push_back(std::make_pair(width / 2, 1));
     this->_field[width / 2][0] = type_field::snake;
+    this->_field[width / 2][1] = type_field::snake;
     this->_generation_apple();
     return ; 
 }
